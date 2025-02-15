@@ -40,22 +40,9 @@ To learn more about Quarto see <https://quarto.org>.
 ## Running Code
 
 When you click the **Render** button a document will be generated that
-includes both content and the output of embedded code. You can embed
-code like this:
+includes both content and the output.
 
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is
-displayed).
+You can create output in two columns or callouts of various types (see below). Callouts are a convenient way to highlight important information. These visually distinct blocks can be used to draw attention to key points, warnings, or additional details.  You can easily create callouts using simple Markdown syntax, specifying the type of callout (e.g., note, warning, or tip) and the content. Quarto will then render these as styled boxes in the HTML output, making your documents more engaging and easier to navigate.  Callouts are a great way to emphasize crucial takeaways and improve the overall readability of your HTML documents.
 
 :::: {layout="[50, 50]"}
 ::: {#first-column}

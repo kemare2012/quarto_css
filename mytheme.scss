@@ -8,6 +8,14 @@ $blue: #1F3169;
     padding: 10px;
 }
 
+/* Responsive adjustments (example) */
+@media (max-width: 768px) { // Example breakpoint
+  .page-title {
+    font-size: 1.5em; // Smaller font on smaller screens
+  }
+}
+
+
 // Import fonts
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@300;800&family=Roboto+Mono:wght@300;400&family=Sanchez&display=swap');
 
@@ -40,8 +48,6 @@ $body-bg: $baby-blue; //was $off-white
 // Font size (reference is 1rem).
 $font-size-base: 1.2rem;
 
-$title-text-align: "center";
-$subtitle-text-align: "center";
 $link-color: $green;
 $code-color: $magenta;
 $code-bg: $off-white;  // was $white
@@ -59,6 +65,13 @@ strong, b {
   font-weight: 500;
 }
 
+/* Styling a table */
+table {
+  width: 70%; /* Adjust table width */
+  margin: 30px auto; /* Center the table */
+  border-collapse: collapse; /* Collapse table borders */
+}
+
 // table header font size
 th {
 font-size: 12px;
@@ -69,11 +82,33 @@ td {
   font-size: 13px;
 }
 
-// top space for titles
-h1, .h1, h2, .h2, h3, .h3 {
-    margin-top: 60px;
+/* Target the main title (h1) */
+h1 {
+  color: $green; /* Example: A nice color. Change as needed */
+  text-align: center; /* Center the title */
+  margin-top: 60px;   // Add some top margin (adjust as needed)
+  margin-bottom: 20px; // Add bottom margin
+  font-size: 2em;      // Adjust font size
+  font-weight: bold;  // Make the title bold
+  font-family: 'Arial', sans-serif; /* Example font. Adjust as you like */
 }
 
+/* Target other headings (h2, h3, etc.) if needed */
+h2, h3 {
+  color: #6600CC; /* Example: A purple color for subheadings */
+  /* Add other styling as needed */
+}
+
+/* Target subtitle if needed */
+.subtitle { /* Or #subtitle, or whatever the actual selector is */
+  color: $teal; /* Example: A nice blue color. Change as desired. */
+  font-size: 1.25rem; /* Example font size adjustment */
+  font-weight: bold;
+  text-align: center; /* Center the text horizontally */
+  margin-top: 1rem;   /* Add some top margin for spacing (adjust as needed) */
+}
+  
+  
 /* makes code chunk text smaller */ 
 .remark-code {
   font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;

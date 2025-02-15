@@ -1,0 +1,201 @@
+---
+title: Marrying Quarto and CSS
+subtitle: An Introduction
+author: Martina Regis
+date: "14 October 2024"
+format: 
+  html:
+    theme: 
+      - cerulean
+      - mytheme.scss
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+toc: true
+toc-title: "Table of Contents"
+number-sections: false
+editor_options: 
+  chunk_output_type: console
+---
+
+<style>
+    .my_custom-section {
+        background-color: #003660;
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+</style>
+
+
+## Quarto
+
+Quarto makes creating HTML documents a breeze.  You can seamlessly weave together narrative text with code, generating dynamic and interactive outputs. Simply write your content in Markdown, embed code chunks for R or Python, and Quarto handles the rest, rendering beautiful HTML pages.  This streamlined workflow is perfect for reports, presentations, and even blog posts.
+
+To learn more about Quarto see <https://quarto.org>.
+
+
+## Running Code
+
+When you click the **Render** button a document will be generated that
+includes both content and the output of embedded code. You can embed
+code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is
+displayed).
+
+:::: {layout="[50, 50]"}
+::: {#first-column}
+Content of column 1
+:::
+    
+::: {#Second-column}
+Content of column 2
+:::
+::::
+
+:::{.callout-note}
+This is a callout block of the type "note".
+:::
+
+:::{.callout-caution collapse="true"}
+Callouts can be collapsible. 
+:::
+
+:::{.callout-important}
+# My heading
+The first heading used within the callout 
+is used as the callout heading.
+:::
+
+:::{.callout-tip icon=false}
+The icon can also be hidden, like this. 
+:::
+
+
+:::{.callout}
+This is a simpler callout, without 
+specifying the "type". 
+:::
+
+## Static and Interactive Tables
+
+Tables are another essential element of many documents, and Quarto provides several ways to create them.  You can use simple Markdown syntax for basic tables, or leverage more powerful tools like the kable package in R or yje gt package for more complex and styled tables.  Quarto handles the formatting, ensuring your tables look professional and are easy to read in the final HTML document.
+
+```{r}
+#| warning: false
+
+# Load libraries and data.
+library(tidyverse)       # Data management
+library()
+library(plotly)              # Create nicely formatted tables
+library(gtsummary)       # Create summary tables
+library(palmerpenguins)  # Contains the dataframe called "penguins"
+
+
+# Lets calculate some numbers to be used later on
+n_Adelie    <- filter(penguins, species=="Adelie") %>% nrow()
+n_Chinstrap <- filter(penguins, species=="Chinstrap") %>% nrow()
+n_Gentoo    <- filter(penguins, species=="Gentoo") %>% nrow()
+```
+
+Refences can also be embedded in the narrative, as seen below.
+
+Our data is comprised of `r nrow(penguins)` peguins; specifically comprised of the
+species Adelie (n=`r n_Adelie`), Chinstrap (n=`r n_Chinstrap`), and Gentoo 
+(n=`r n_Chinstrap`). Penguin charactersitics are presented in @tbl-demographics.
+
+```{r}
+#| label: tbl-demographics
+#| tbl-cap: Penguin charactertics
+
+penguins %>% 
+  select(species, sex, flipper_length_mm, body_mass_g) %>%
+  tbl_summary(
+      by=species,
+      missing = "no",
+      statistic = list(all_continuous() ~ "{mean} ({sd})",
+                       all_categorical() ~ "{n} ({p}%)"))
+```
+
+It is fairly easy to create an interactive table in the quarto doc using the DT package, assuming it is already installed.
+
+Here is a simple code for one.
+
+```{r}
+#| label: tbl-iris
+#| tbl-cap: Iris 101
+library(DT)
+# load the iris dataset
+data(iris)
+
+# Make a table
+datatable(iris,
+  filter = "top",
+)
+```
+
+## Charts
+
+Beyond text and code, Quarto excels at creating rich visualizations. With built-in support for popular charting libraries like ggplot2 (R) and matplotlib (Python), you can easily generate stunning charts directly within your document.  Just write the code to create your chart, and Quarto will embed it in the HTML output.  Interactive charts, allowing users to explore the data, are also easily incorporated using plotly.
+
+References can also be included, as below:
+
+Our analyses show that flipper length and body mass are related, see @fig-scatter.  
+
+```{r}
+#| label: fig-scatter
+#| fig-cap: Flipper length by body mass
+#| fig-height: 4
+
+p1<-ggplot(data = penguins, 
+                       aes(x = flipper_length_mm,
+                           y = body_mass_g)) +
+  geom_point(aes(color = species, 
+                 shape = species,
+                text = paste("Length:", flipper_length_mm, 
+                             "<br>Mass:", body_mass_g, 
+                             "<br>Species:", species)),
+             size = 2,
+             alpha = 0.8) +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Flipper length (mm)",
+       y = "Body mass (g)",
+       color = "Penguin species",
+       shape = "Penguin species") +
+  theme_minimal() + 
+  theme(legend.position = c(0.2, 0.7),
+        plot.title.position = "plot",
+        plot.background = element_rect(fill = "#d2e3f3"),
+        panel.background = element_rect(fill = "#d2e3f3",
+                                        colour = "black",
+                                        size = 0.8, linetype = "dashed"),
+        plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.caption.position = "plot")
+ggplotly(p1, tooltip = "text")
+```
+
+
+## CSS and SCSS
+
+<div class="my_custom-section">
+CSS (Cascading Style Sheets). CSS allows you to define styles and apply them to HTML elements, giving you full control over the document’s visual presentation. You can include CSS styles within your Quarto document using HTML’s "style" tag. 
+<br>
+
+SASS files have a “.scss” extension. These files extend the functionality of CSS by allowing for a more organized and modular stylesheets, making it easier to manage and maintain your styles. In this blog, we have created an interbal tag as well as an external scss file for managing these. They control backgrounf color, headings, boxes, text spacing and table settings.
+</div>
+
+

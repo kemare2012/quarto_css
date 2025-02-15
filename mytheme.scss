@@ -1,0 +1,82 @@
+/*-- scss:defaults --*/
+
+$blue: #1F3169;
+
+.my_custom-section2 {
+    background-color: $blue;
+    color: white;
+    padding: 10px;
+}
+
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@300;800&family=Roboto+Mono:wght@300;400&family=Sanchez&display=swap');
+
+// fonts
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-serif: 'Sanchez', serif;
+$font-family-monospace: 'Roboto Mono', monospace;
+
+// colors
+$baby-blue: #d2e3f3;
+$teal: #047C90;
+$dark-blue: #003660;
+$white: #FFFFFF;
+$green: #78A540;
+$magenta: #900C3F;
+$white: #FFFFFF;
+$off-white: #F7F7F7;
+$gray: #ADADAD;
+$dark-gray: #373A3E;
+$peach: #DF8073;
+
+// scss variables
+
+// Color of the text in the body of the document.
+$body-color: #000000;
+  
+// Page background color.
+$body-bg: $baby-blue; //was $off-white
+  
+// Font size (reference is 1rem).
+$font-size-base: 1.2rem;
+
+$title-text-align: "center";
+$subtitle-text-align: "center";
+$link-color: $green;
+$code-color: $magenta;
+$code-bg: $off-white;  // was $white
+$code-block-font-size: 0.8em;
+$code-block-bg: $off-white;
+
+/*-- scss:rules --*/
+
+body {
+  line-height: 1.3em;
+}
+
+// bold styling
+strong, b {
+  font-weight: 500;
+}
+
+// table header font size
+th {
+font-size: 12px;
+}
+
+// table text font size
+td {
+  font-size: 13px;
+}
+
+// top space for titles
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 60px;
+}
+
+/* makes code chunk text smaller */ 
+.remark-code {
+  font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+  font-size: 30%;
+  line-height: 1em;
+ }
